@@ -554,13 +554,11 @@
       btn.textContent = 'SUBMITTING...';
       btn.disabled = true;
 
-      // Send to Google Sheets
-      fetch('https://script.google.com/macros/s/AKfycbxMhduo_4FGbsRZB-_zp0mLeq86P_pFGdZksa7sxTRiHbtay89-S0zFUNp9MsRtkTySNQ/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(() => {
+      // Send to Google Sheets via GET
+      const params = new URLSearchParams(data).toString();
+      const url = 'https://script.google.com/macros/s/AKfycbxMhduo_4FGbsRZB-_zp0mLeq86P_pFGdZksa7sxTRiHbtay89-S0zFUNp9MsRtkTySNQ/exec?' + params;
+      
+      fetch(url, { mode: 'no-cors' }).then(() => {
         // Show confirmation
         const name = document.getElementById('fullName').value;
         document.getElementById('confirmName').textContent = name;
